@@ -9,29 +9,43 @@ namespace StockApi.Infrastructure.Repository
     {
         private readonly ApplicationDbContext _context;
         public StockRepository(ApplicationDbContext context) => _context = context;
-        public Task<Stock> CreateAsync(Stock stock)
+        public async Task<Stock> CreateAsync(Stock stock)
         {
-            throw new NotImplementedException();
+            await _context.Stocks.AddAsync(stock);
+            await _context.SaveChangesAsync();
+            return stock;
         }
 
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Stocks
+                 .Where(model => model.Id == id)
+                 .ExecuteDeleteAsync();
         }
 
         public async Task<List<Stock>> GetAllAsync()
         {
-            return await _context.Stocks.ToListAsync();
+            return await _context.Stocks.Include(c => c.Comments).ToListAsync();
         }
 
-        public Task<Stock?> GetByIdAsync(int id)
+        public async Task<Stock?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Stocks.Include(c => c.Comments).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<int> UpdateAsync(int id, Stock stock)
+        public async Task<int> UpdateAsync(int id, Stock stock)
         {
-            throw new NotImplementedException();
+            return await _context.Stocks
+                 .Where(model => model.Id == id)
+                 .ExecuteUpdateAsync(setters => setters
+                   .SetProperty(m => m.Id, stock.Id)
+                   .SetProperty(m => m.MarketCap, stock.MarketCap)
+                   .SetProperty(m => m.Purchase, stock.Purchase)
+                   .SetProperty(m => m.CompanyName, stock.CompanyName)
+                   .SetProperty(m => m.Symbol, stock.Symbol)
+                   .SetProperty(m => m.LastDiv, stock.LastDiv)
+                 );
         }
+
     }
 }

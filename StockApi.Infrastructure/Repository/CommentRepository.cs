@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using StockApi.Domain.Entities;
 using StockApi.Domain.Interfaces;
 using StockApi.Infrastructure.Data;
@@ -13,29 +10,41 @@ namespace StockApi.Infrastructure.Repository
         private readonly ApplicationDbContext _context;
         public CommentRepository(ApplicationDbContext context) => _context = context;
 
-        public Task<Comment> CreateAsync(Comment comment)
+        public async Task<Comment> CreateAsync(Comment comment)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(comment);
+            await _context.SaveChangesAsync();
+            return comment;
         }
 
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Comments
+                            .Where(m => m.Id == id)
+                            .ExecuteDeleteAsync();
         }
 
-        public Task<List<Comment>> GetAllAsync()
+        public async Task<List<Comment>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Comments.ToListAsync();
         }
 
-        public Task<Comment?> GetByIdAsync(int id)
+        public async Task<Comment?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Comments.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<int> UpdateAsync(int id, Comment comment)
+        public async Task<int> UpdateAsync(int id, Comment comment)
         {
-            throw new NotImplementedException();
+            return await _context.Comments
+                            .Where(m => m.Id == id)
+                            .ExecuteUpdateAsync(setter => setter
+                              .SetProperty(m => m.Id, comment.Id)
+                              .SetProperty(m => m.Title, comment.Title)
+                              .SetProperty(m => m.Content, comment.Content)
+                              .SetProperty(m => m.CreateOn, comment.CreateOn)
+                              .SetProperty(m => m.StockId, comment.StockId)
+                              );
         }
     }
 }
