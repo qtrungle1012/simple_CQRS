@@ -8,10 +8,6 @@ using StockApi.Infrastructure.Repository;
 var builder = WebApplication.CreateBuilder(args);
 
 
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
 var cs = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseSqlServer(cs, b => b
