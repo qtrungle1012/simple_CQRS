@@ -1,0 +1,16 @@
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\bin\Debug\net8.0\StockApi.Application.deps.json
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\bin\Debug\net8.0\StockApi.Application.dll
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\bin\Debug\net8.0\StockApi.Application.pdb
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\bin\Debug\net8.0\StockApi.Domain.dll
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\bin\Debug\net8.0\StockApi.Domain.pdb
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.csproj.AssemblyReference.cache
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.GeneratedMSBuildEditorConfig.editorconfig
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.AssemblyInfoInputs.cache
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.AssemblyInfo.cs
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.csproj.CoreCompileInputs.cache
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.sourcelink.json
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.16A597B8.Up2Date
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.dll
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\refint\StockApi.Application.dll
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\StockApi.Application.pdb
+F:\TrungData\TaiLieu\TaiLieuCaNhan\ISD COPR\simple_CQRS\StockApi.Application\obj\Debug\net8.0\ref\StockApi.Application.dll
