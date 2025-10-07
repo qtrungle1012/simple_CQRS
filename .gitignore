@@ -1,0 +1,30 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Configuration
+appsettings.Development.json
+
+# Entity Framework Migrations cache
+Migrations/
+
+# Backup files
+*.bak
+
+# Publish output
+publish/
+*.Publish.xml
+
+# JetBrains Rider
+.idea/
+
+# Other
+Thumbs.db
