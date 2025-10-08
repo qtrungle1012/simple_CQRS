@@ -1,35 +1,27 @@
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-using StockApi.Application.Features.Stocks.Queries.GetStocks;
-using StockApi.Domain.Interfaces;
-using StockApi.Infrastructure.Data;
-using StockApi.Infrastructure.Repository;
+using StockApi.Application;
+using StockApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Đăng ký các tầng
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
-var cs = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-    opt.UseSqlServer(cs, b => b
-        .MigrationsAssembly("StockApi.Infrastructure")
-        .MigrationsHistoryTable("__EFMigrationsHistory_SqlServer")));
-
-builder.Services.AddScoped<IStockRepository, StockRepository>();
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(GetStockQueryHandler).Assembly);
-});
 builder.Services.AddControllers();
 
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 app.MapControllers();
-
 app.Run();
-

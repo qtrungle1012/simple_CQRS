@@ -1,7 +1,10 @@
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using StockApi.Application.Features.Stocks.Commands.CreateStock;
+using StockApi.Application.Features.Stocks.Commands.DeleteStock;
+using StockApi.Application.Features.Stocks.Commands.UpdateStock;
 using StockApi.Application.Features.Stocks.DTOs;
+using StockApi.Application.Features.Stocks.Queries.GetStockById;
 using StockApi.Application.Features.Stocks.Queries.GetStocks;
 using StockApi.WebApi.Contracts.Common;
 
@@ -24,6 +27,39 @@ namespace StockApi.WebApi.Controllers
             var response = new ApiResponse<List<StockDto>>(1000, stocks);
             return Ok(response);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var stock = await _mediator.Send(new GetStockByIdQuery() { Id = id });
+            var response = new ApiResponse<StockDto>(1000, stock);
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteStockCommand() { Id = id });
+            var response = new ApiResponse<int>(1000, result);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateStockCommand createStockCommand)
+        {
+            var createdBlog = await _mediator.Send(createStockCommand);
+            var res = new ApiResponse<StockDto>(1000, createdBlog);
+            return Ok(res);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateStockCommand updateStockCommand)
+        {
+            var update = await _mediator.Send(updateStockCommand);
+             var res = new ApiResponse<StockDto>(1000, update);
+            return Ok(res);
+        }
+      
 
     }
 }
