@@ -4,11 +4,11 @@ using StockApi.Domain.Interfaces;
 
 namespace StockApi.Application.Features.Stocks.Commands.DeleteStock
 {
-    public class DeleteStockCommandHandeller : IRequestHandler<DeleteStockCommand, int>
+    public class DeleteStockCommandHandler : IRequestHandler<DeleteStockCommand, int>
     {
         private readonly IStockRepository _stockRepository;
 
-        public DeleteStockCommandHandeller(IStockRepository stockRepository)
+        public DeleteStockCommandHandler(IStockRepository stockRepository)
         {
             _stockRepository = stockRepository;
         }

@@ -39,12 +39,8 @@ namespace StockApi.Infrastructure.Repository
             return await _context.Comments
                             .Where(m => m.Id == id)
                             .ExecuteUpdateAsync(setter => setter
-                              .SetProperty(m => m.Id, comment.Id)
                               .SetProperty(m => m.Title, comment.Title)
-                              .SetProperty(m => m.Content, comment.Content)
-                              .SetProperty(m => m.CreateOn, comment.CreateOn)
-                              .SetProperty(m => m.StockId, comment.StockId)
-                              );
+                              .SetProperty(m => m.Content, comment.Content));
         }
     }
 }

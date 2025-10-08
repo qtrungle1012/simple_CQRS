@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using StockApi.Application.Common.Mappings;
+using StockApi.Domain.Entities;
 
 namespace StockApi.Application.Features.Comments.DTOs
 {
-    public class CommentDto
+    public class CommentDto : IMapFrom<Comment>
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

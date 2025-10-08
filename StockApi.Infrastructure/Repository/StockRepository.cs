@@ -38,7 +38,6 @@ namespace StockApi.Infrastructure.Repository
             return await _context.Stocks
                  .Where(model => model.Id == id)
                  .ExecuteUpdateAsync(setters => setters
-                   .SetProperty(m => m.Id, stock.Id)
                    .SetProperty(m => m.MarketCap, stock.MarketCap)
                    .SetProperty(m => m.Purchase, stock.Purchase)
                    .SetProperty(m => m.CompanyName, stock.CompanyName)

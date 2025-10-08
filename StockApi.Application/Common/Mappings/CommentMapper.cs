@@ -1,3 +1,5 @@
+using StockApi.Application.Features.Comments.Commands.CreateComment;
+using StockApi.Application.Features.Comments.Commands.UpdateComment;
 using StockApi.Application.Features.Comments.DTOs;
 using StockApi.Domain.Entities;
 
@@ -17,17 +19,15 @@ namespace StockApi.Application.Common.Mappings
             };
         }
 
-        public static Comment toCommentFromCreate(this CreateCommentRequest request, int stockId)
+        public static void MapFromCreateCommand(this Comment comment, CreateCommentCommand request)
         {
-            return new Comment
-            {
-                Content = request.Content,
-                Title = request.Title,
-                StockId = stockId,
-            };
+            comment.Content = request.Content;
+            comment.Title = request.Title;
+            comment.StockId = request.StockId;
+            comment.UserId = request.UserId;
         }
 
-        public static void toCommentFromUpdate(this Comment comment, UpdateCommentRequest request)
+        public static void MapFromUpdateCommand(this Comment comment, UpdateCommentCommand request)
         {
             comment.Title = request.Title;
             comment.Content = request.Content;

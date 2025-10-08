@@ -21,6 +21,8 @@ namespace StockApi.Infrastructure
 
             // Đăng ký repository
             services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+
 
             return services;
         }

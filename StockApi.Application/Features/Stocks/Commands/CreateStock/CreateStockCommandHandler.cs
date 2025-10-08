@@ -11,12 +11,12 @@ using StockApi.Domain.Interfaces;
 
 namespace StockApi.Application.Features.Stocks.Commands.CreateStock
 {
-    public class CreateStockCommandHandeller : IRequestHandler<CreateStockCommand, StockDto>
+    public class CreateStockCommandHandler : IRequestHandler<CreateStockCommand, StockDto>
     {
         private readonly IStockRepository _stockRepository;
         private readonly IMapper _mapper;
 
-        public CreateStockCommandHandeller(IStockRepository stockRepository, IMapper mapper)
+        public CreateStockCommandHandler(IStockRepository stockRepository, IMapper mapper)
         {
             _stockRepository = stockRepository;
             _mapper = mapper;

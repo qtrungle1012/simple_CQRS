@@ -17,7 +17,6 @@ namespace StockApi.Domain.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        // Navigation property: Một user có thể có nhiều comment
         public List<Comment> Comments { get; set; } = new();
     }
 }

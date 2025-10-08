@@ -6,12 +6,12 @@ using StockApi.Domain.Interfaces;
 
 namespace StockApi.Application.Features.Stocks.Commands.UpdateStock
 {
-    public class UpdateStockCommandHandeller : IRequestHandler<UpdateStockCommand, StockDto>
+    public class UpdateStockCommandHandler : IRequestHandler<UpdateStockCommand, StockDto>
     {
         private readonly IStockRepository _stockRepository;
         private readonly IMapper _mapper;
 
-        public UpdateStockCommandHandeller(IStockRepository stockRepository, IMapper mapper)
+        public UpdateStockCommandHandler(IStockRepository stockRepository, IMapper mapper)
         {
             _stockRepository = stockRepository;
             _mapper = mapper;
