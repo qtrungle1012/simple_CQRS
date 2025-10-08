@@ -7,17 +7,7 @@ namespace StockApi.Application.Common.Mappings
 {
     public static class CommentMapper
     {
-        public static CommentDto toCommentDto(this Comment comment)
-        {
-            return new CommentDto
-            {
-                Id = comment.Id,
-                Content = comment.Content,
-                Title = comment.Title,
-                CreateOn = comment.CreateOn,
-                StockId = comment.StockId,
-            };
-        }
+       
 
         public static void MapFromCreateCommand(this Comment comment, CreateCommentCommand request)
         {

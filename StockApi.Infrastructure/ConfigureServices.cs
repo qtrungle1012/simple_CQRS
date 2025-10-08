@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StockApi.Domain.Entities;
 using StockApi.Domain.Interfaces;
 using StockApi.Infrastructure.Data;
 using StockApi.Infrastructure.Repository;
@@ -21,7 +22,10 @@ namespace StockApi.Infrastructure
 
             // Đăng ký repository
             services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+
+
 
 
             return services;

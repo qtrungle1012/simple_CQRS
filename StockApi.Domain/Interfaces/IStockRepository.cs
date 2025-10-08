@@ -6,13 +6,7 @@ using StockApi.Domain.Entities;
 
 namespace StockApi.Domain.Interfaces
 {
-    public interface IStockRepository
+    public interface IStockRepository : IGenericRepository<Stock>
     {
-        Task<List<Stock>> GetAllAsync();
-        Task<Stock?> GetByIdAsync(int id);
-        Task<Stock> CreateAsync(Stock stock);
-        Task<int> UpdateAsync(int id, Stock stock);
-        Task<int> DeleteAsync(int id);
-
     }
 }
