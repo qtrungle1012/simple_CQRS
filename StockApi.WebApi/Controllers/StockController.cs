@@ -44,20 +44,38 @@ namespace StockApi.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+       [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStockCommand createStockCommand)
         {
-            var createdBlog = await _mediator.Send(createStockCommand);
-            var res = new ApiResponse<StockDto>(1000, createdBlog);
-            return Ok(res);
+            try
+            {
+                var createdStock = await _mediator.Send(createStockCommand);
+                var res = new ApiResponse<StockDto>(1000, createdStock);
+                return Ok(res);
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
+                return BadRequest(new { code = 400, message = "Validation failed", errors });
+            }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateStockCommand updateStockCommand)
         {
-            var update = await _mediator.Send(updateStockCommand);
-             var res = new ApiResponse<StockDto>(1000, update);
-            return Ok(res);
+            try
+            {
+                var update = await _mediator.Send(updateStockCommand);
+                var res = new ApiResponse<StockDto>(1000, update);
+                return Ok(res);
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                
+                var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
+                return BadRequest(new { code = 400, message = "Validation failed", errors });
+            }
         }
       
 
