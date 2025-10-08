@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using StockApi.Application.Common.Mappings;
-using StockApi.Domain.Entities;
+using MediatR;
+using StockApi.Application.Features.Stocks.DTOs;
 
-namespace StockApi.Application.Features.Stocks.DTOs
+namespace StockApi.Application.Features.Stocks.Commands.UpdateStock
 {
-    public class CreateStockRequest : IMapFrom<Stock>
+    public class UpdateStockCommand : IRequest<StockDto>
     {
+        public int Id { get; set; }
         public string Symbol { get; set; } = string.Empty;
         public string CompanyName { get; set; } = string.Empty;
         public decimal Purchase { get; set; }

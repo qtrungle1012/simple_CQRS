@@ -1,3 +1,5 @@
+using StockApi.Application.Features.Stocks.Commands.CreateStock;
+using StockApi.Application.Features.Stocks.Commands.UpdateStock;
 using StockApi.Application.Features.Stocks.DTOs;
 using StockApi.Domain.Entities;
 
@@ -20,19 +22,17 @@ namespace StockApi.Application.Common.Mappings
             };
         }
 
-        public static Stock toStockFromCreateDto(this CreateStockRequest request)
+        public static void MapFromCreateCommand(this Stock stock, CreateStockCommand request)
         {
-            return new Stock
-            {
-                Symbol = request.Symbol,
-                CompanyName = request.CompanyName,
-                Purchase = request.Purchase,
-                LastDiv = request.LastDiv,
-                Industry = request.Industry,
-                MarketCap = request.MarketCap
-            };
+            stock.Symbol = request.Symbol;
+            stock.CompanyName = request.CompanyName;
+            stock.Purchase = request.Purchase;
+            stock.LastDiv = request.LastDiv;
+            stock.Industry = request.Industry;
+            stock.MarketCap = request.MarketCap;
         }
-        public static void UpdateStockFromDto(this Stock stock, UpdateStockRequest request)
+        
+        public static void MapFromUpdateCommand(this Stock stock, UpdateStockCommand request)
         {
             stock.Symbol = request.Symbol;
             stock.CompanyName = request.CompanyName;

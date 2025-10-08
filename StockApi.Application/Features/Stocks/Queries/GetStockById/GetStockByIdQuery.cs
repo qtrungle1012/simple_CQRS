@@ -5,6 +5,7 @@ namespace StockApi.Application.Features.Stocks.Queries.GetStockById
 {
     public class GetStockByIdQuery : IRequest<StockDto>
     {
+        public int Id { get; set; }
 
     }
 }
