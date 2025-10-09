@@ -13,9 +13,6 @@ obj/
 # Configuration
 appsettings.Development.json
 
-# Entity Framework Migrations cache
-Migrations/
-
 # Backup files
 *.bak
 
