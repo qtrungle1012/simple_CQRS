@@ -6,25 +6,36 @@ namespace StockApi.Application.Features.Stocks.Commands.UpdateStock
     {
         public UpdateStockCommandValidator()
         {
+            RuleFor(x => x.Id)
+                .GreaterThan(0)
+                .WithMessage("Stock ID must be greater than 0.");
+
             RuleFor(x => x.Symbol)
-                .NotEmpty().WithMessage("Symbol is required")
-                .MaximumLength(10).WithMessage("Symbol max length is 10");
+                .MaximumLength(10)
+                .WithMessage("Symbol max length is 10.")
+                .When(x => !string.IsNullOrWhiteSpace(x.Symbol));
 
             RuleFor(x => x.CompanyName)
-                .NotEmpty().WithMessage("Company name is required")
-                .MaximumLength(100).WithMessage("Company name max length is 100");
+                .MaximumLength(100)
+                .WithMessage("Company name max length is 100.")
+                .When(x => !string.IsNullOrWhiteSpace(x.CompanyName));
 
             RuleFor(x => x.Purchase)
-                .GreaterThan(0).WithMessage("Purchase must be greater than 0");
+                .GreaterThan(0)
+                .WithMessage("Purchase must be greater than 0.");
 
             RuleFor(x => x.LastDiv)
-                .GreaterThanOrEqualTo(0).WithMessage("LastDiv cannot be negative");
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("LastDiv cannot be negative.");
 
             RuleFor(x => x.Industry)
-                .NotEmpty().WithMessage("Industry is required");
+                .MaximumLength(50)
+                .WithMessage("Industry max length is 50.")
+                .When(x => !string.IsNullOrWhiteSpace(x.Industry));
 
             RuleFor(x => x.MarketCap)
-                .GreaterThanOrEqualTo(0).WithMessage("MarketCap cannot be negative");
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("MarketCap cannot be negative.");
         }
     }
 }

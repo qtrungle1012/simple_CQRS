@@ -66,6 +66,10 @@ namespace StockApi.WebApi.Controllers
         {
             try
             {
+                if (id != updateStockCommand.Id)
+                {
+                    updateStockCommand.Id = id;
+                }
                 var update = await _mediator.Send(updateStockCommand);
                 var res = new ApiResponse<StockDto>(1000, update);
                 return Ok(res);

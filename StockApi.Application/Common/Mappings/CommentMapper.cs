@@ -1,6 +1,5 @@
 using StockApi.Application.Features.Comments.Commands.CreateComment;
 using StockApi.Application.Features.Comments.Commands.UpdateComment;
-using StockApi.Application.Features.Comments.DTOs;
 using StockApi.Domain.Entities;
 
 namespace StockApi.Application.Common.Mappings

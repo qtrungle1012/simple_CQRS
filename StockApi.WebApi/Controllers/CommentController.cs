@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StockApi.Application.Features.Comments.Commands.CreateComment;
+using StockApi.Application.Features.Comments.Commands.DeleteComment;
 using StockApi.Application.Features.Comments.Commands.UpdateComment;
 using StockApi.Application.Features.Comments.DTOs;
 using StockApi.Application.Features.Comments.Queries.GetComment;
@@ -63,10 +64,18 @@ namespace StockApi.WebApi.Controllers
             }
             catch (FluentValidation.ValidationException ex)
             {
-                
+
                 var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
                 return BadRequest(new { code = 400, message = "Validation failed", errors });
             }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteCommentCommand() { Id = id });
+            var response = new ApiResponse<int>(1000, result);
+            return Ok(response);
         }
 
     }

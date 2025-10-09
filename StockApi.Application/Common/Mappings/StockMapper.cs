@@ -1,14 +1,11 @@
 using StockApi.Application.Features.Stocks.Commands.CreateStock;
 using StockApi.Application.Features.Stocks.Commands.UpdateStock;
-using StockApi.Application.Features.Stocks.DTOs;
 using StockApi.Domain.Entities;
 
 namespace StockApi.Application.Common.Mappings
 {
     public static class StockMapper
     {
-       
-
         public static void MapFromCreateCommand(this Stock stock, CreateStockCommand request)
         {
             stock.Symbol = request.Symbol;
@@ -28,7 +25,5 @@ namespace StockApi.Application.Common.Mappings
             stock.Industry = request.Industry;
             stock.MarketCap = request.MarketCap;
         }
-
-
     }
 }
