@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockApi.Application.Features.Users.Commands.CreateUser;
 using StockApi.Application.Features.Users.Commands.DeleteUser;
@@ -20,6 +21,7 @@ namespace StockApi.WebApi.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
