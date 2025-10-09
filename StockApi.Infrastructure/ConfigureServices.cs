@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StockApi.Application.Interfaces;
 using StockApi.Application.Interfaces.Security;
 using StockApi.Domain.Entities;
 using StockApi.Domain.Interfaces;
 using StockApi.Infrastructure.Data;
 using StockApi.Infrastructure.Repository;
 using StockApi.Infrastructure.Security;
+using StockApi.Infrastructure.Service;
 
 namespace StockApi.Infrastructure
 {
@@ -28,7 +30,18 @@ namespace StockApi.Infrastructure
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
 
+            services.Configure<JwtSettings>(options =>
+            {
+                options.SecretKey = configuration["JwtSettings:SecretKey"] ?? "default-secret-key";
+                options.Issuer = configuration["JwtSettings:Issuer"] ?? "default-issuer";
+                options.Audience = configuration["JwtSettings:Audience"] ?? "default-audience";
+                options.AccessTokenExpirationMinutes = int.TryParse(configuration["JwtSettings:AccessTokenExpirationMinutes"], out var m) ? m : 15;
+                options.RefreshTokenExpirationDays = int.TryParse(configuration["JwtSettings:RefreshTokenExpirationDays"], out var d) ? d : 7;
+            });
 
+
+
+            services.AddScoped<IJwtService, JwtService>();
 
             return services;
         }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StockApi.Application.Features.Auth.DTOs
+namespace StockApi.Application.Features.Auth.Commands.Register
 {
-    public class LoginRequest
+    public class RegisterCommandHandler
     {
         
     }

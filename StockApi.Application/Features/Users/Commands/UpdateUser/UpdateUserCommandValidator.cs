@@ -11,9 +11,9 @@ namespace StockApi.Application.Features.Users.Commands.UpdateUser
         public UpdateUserCommandValidator()
         {
             // Bắt buộc có ID để update
-            RuleFor(x => x.Id)
-                .GreaterThan(0)
-                .WithMessage("User ID must be greater than 0.");
+            // RuleFor(x => x.Id)
+            //     .GreaterThan(0)
+            //     .WithMessage("User ID must be greater than 0.");
 
             // FullName không bắt buộc, nhưng nếu có thì không được quá dài
             RuleFor(x => x.FullName)

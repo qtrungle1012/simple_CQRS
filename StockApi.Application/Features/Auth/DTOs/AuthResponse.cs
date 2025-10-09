@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StockApi.Application.Features.Auth.DTOs
 {
-    public class RefreshTokenResponse
+    public class AuthResponse
     {
         
     }
