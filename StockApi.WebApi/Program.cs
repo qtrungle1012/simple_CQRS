@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StockApi.Infrastructure.Security;
 using Microsoft.OpenApi.Models;
+using StockApi.Infrastructure.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +38,7 @@ builder.Services.AddAuthorization();
 // Đăng ký các tầng
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-
+builder.Services.AddHostedService<TokenCleanupService>();
 builder.Services.AddControllers();
 
 // Swagger
@@ -53,7 +54,6 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Nhập JWT token. Ví dụ: eyJhbGc..."
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -73,13 +73,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 var app = builder.Build();
 
-// Pipeline
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "StockApi API v1");
-    c.RoutePrefix = "swagger"; 
-});
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MediatR;
+using StockApi.Application.Features.Auth.DTOs;
 
 namespace StockApi.Application.Features.Auth.Commands.RefreshToken
 {
-    public class RefreshTokenCommand
+    public class RefreshTokenCommand : IRequest<TokenResponse>
     {
-        
+         public string Token { get; set; } = string.Empty;
     }
 }

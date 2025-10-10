@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StockApi.Application.Interfaces;
 using StockApi.Application.Interfaces.Security;
-using StockApi.Domain.Entities;
 using StockApi.Domain.Interfaces;
 using StockApi.Infrastructure.Data;
 using StockApi.Infrastructure.Repository;
@@ -29,6 +28,8 @@ namespace StockApi.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
 
             services.Configure<JwtSettings>(options =>
             {
