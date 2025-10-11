@@ -33,16 +33,16 @@ namespace StockApi.Infrastructure.Repository
 
         public async Task<User?> GetByUsernameAsync(string username)
         {
-           return await _context.User.FirstOrDefaultAsync(u => u.Username == username);
+            return await _context.User.FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<int> UpdateAsync(int id, User entity)
         {
             return await _context.User.Where(u => u.Id == id)
-            .ExecuteUpdateAsync( setters => setters
+            .ExecuteUpdateAsync(setters => setters
                             .SetProperty(m => m.FullName, entity.FullName)
                             .SetProperty(m => m.Email, entity.Email)
-                            .SetProperty(m => m.Password, entity.Password)           
+                            .SetProperty(m => m.Password, entity.Password)
             );
         }
     }

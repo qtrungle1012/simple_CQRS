@@ -24,7 +24,7 @@ namespace StockApi.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var stocks = await _mediator.Send(new GetStockQuery());
-            var response = new ApiResponse<List<StockDto>>(1000, stocks);
+            var response = new ApiResponse<List<StockDto>>((int) ErrorCode.SUCCESS, stocks);
             return Ok(response);
         }
 
@@ -32,7 +32,7 @@ namespace StockApi.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var stock = await _mediator.Send(new GetStockByIdQuery() { Id = id });
-            var response = new ApiResponse<StockDto>(1000, stock);
+            var response = new ApiResponse<StockDto>((int) ErrorCode.SUCCESS, stock);
             return Ok(response);
         }
 
@@ -40,46 +40,31 @@ namespace StockApi.WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteStockCommand() { Id = id });
-            var response = new ApiResponse<int>(1000, result);
+            var response = new ApiResponse<int>((int) ErrorCode.SUCCESS, result);
             return Ok(response);
         }
 
        [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStockCommand createStockCommand)
         {
-            try
-            {
-                var createdStock = await _mediator.Send(createStockCommand);
-                var res = new ApiResponse<StockDto>(1000, createdStock);
-                return Ok(res);
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
-                return BadRequest(new { code = 400, message = "Validation failed", errors });
-            }
+          
+            var createdStock = await _mediator.Send(createStockCommand);
+            var res = new ApiResponse<StockDto>((int) ErrorCode.SUCCESS, createdStock);
+            return Ok(res);
+           
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateStockCommand updateStockCommand)
         {
-            try
+            if (id != updateStockCommand.Id)
             {
-                if (id != updateStockCommand.Id)
-                {
-                    updateStockCommand.Id = id;
-                }
-                var update = await _mediator.Send(updateStockCommand);
-                var res = new ApiResponse<StockDto>(1000, update);
-                return Ok(res);
+                updateStockCommand.Id = id;
             }
-            catch (FluentValidation.ValidationException ex)
-            {
-                
-                var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
-                return BadRequest(new { code = 400, message = "Validation failed", errors });
-            }
+            var update = await _mediator.Send(updateStockCommand);
+            var res = new ApiResponse<StockDto>((int) ErrorCode.SUCCESS, update);
+            return Ok(res);
         }
       
 

@@ -6,13 +6,14 @@ using Microsoft.IdentityModel.Tokens;
 using StockApi.Infrastructure.Security;
 using Microsoft.OpenApi.Models;
 using StockApi.Infrastructure.Service;
+using StockApi.WebApi.Middleware;
+using StockApi.WebApi.Contracts.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 var key = Encoding.ASCII.GetBytes(jwtSettings!.SecretKey);
 
-// Cấu hình authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,22 +32,36 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ClockSkew = TimeSpan.Zero
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnChallenge = async context =>
+        {
+            context.HandleResponse();
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync(new { Code = ErrorCode.UNAUTHORIZED, Message = "Unauthorized access" });
+        },
+        OnForbidden = async context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync(new { Code = ErrorCode.FORBIDDEN, Message = "Forbidden access" });
+        }
+    };
 });
 
 builder.Services.AddAuthorization();
 
-// Đăng ký các tầng
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHostedService<TokenCleanupService>();
 builder.Services.AddControllers();
 
-// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "StockApi API", Version = "v1" });
-
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -55,7 +70,6 @@ builder.Services.AddSwaggerGen(c =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
     });
-
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -71,6 +85,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -80,6 +95,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseGlobalExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

@@ -1,4 +1,5 @@
 using MediatR;
+using StockApi.Application.Common.Exceptions;
 using StockApi.Domain.Interfaces;
 
 namespace StockApi.Application.Features.Auth.Commands.Logout
@@ -15,7 +16,7 @@ namespace StockApi.Application.Features.Auth.Commands.Logout
             var token = await _refreshTokenRepository.GetByTokenAsync(request.RefreshToken);
             if (token == null)
             {
-                throw new UnauthorizedAccessException("Invalid refresh token");
+                throw new BusinessException("Invalid refresh token");
             }
             await _refreshTokenRepository.InvalidateAsync(token);
 

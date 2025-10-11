@@ -1,4 +1,5 @@
 using MediatR;
+using StockApi.Application.Common.Exceptions;
 using StockApi.Application.Common.Mappings;
 using StockApi.Application.Features.Auth.DTOs;
 using StockApi.Application.Interfaces;
@@ -30,10 +31,10 @@ namespace StockApi.Application.Features.Auth.Commands.Login
         {
             var user = await _userRepository.GetByUsernameAsync(request.Username);
             if (user == null)
-                throw new UnauthorizedAccessException("Invalid username or password");
+                throw new BusinessException("Invalid username or password");
 
             if (!_passwordHasher.VerifyPassword(user.Password, request.Password))
-                throw new UnauthorizedAccessException("Invalid username or password");
+                throw new BusinessException("Invalid username or password");
             
             await _refreshTokenRepository.RevokeAllUserTokensAsync(user.Id);
 

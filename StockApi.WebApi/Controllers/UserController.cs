@@ -26,7 +26,7 @@ namespace StockApi.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await _mediator.Send(new GetUserQuery());
-            var response = new ApiResponse<List<UserDto>>(1000, users);
+            var response = new ApiResponse<List<UserDto>>((int)ErrorCode.SUCCESS, users);
             return Ok(response);
         }
 
@@ -34,7 +34,7 @@ namespace StockApi.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _mediator.Send(new GetUserByIdQuery() { Id = id });
-            var response = new ApiResponse<UserDto>(1000, user);
+            var response = new ApiResponse<UserDto>((int)ErrorCode.SUCCESS, user);
             return Ok(response);
         }
 
@@ -42,45 +42,31 @@ namespace StockApi.WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteUserCommand() { Id = id });
-            var response = new ApiResponse<int>(1000, result);
+            var response = new ApiResponse<int>((int) ErrorCode.SUCCESS, result);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserCommand request)
         {
-            try
-            {
-                var createUser = await _mediator.Send(request);
-                var res = new ApiResponse<UserDto>(1000, createUser);
-                return Ok(res);
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-                var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
-                return BadRequest(new { code = 400, message = "Validation failed", errors });
-            }
+           
+            var createUser = await _mediator.Send(request);
+            var res = new ApiResponse<UserDto>((int) ErrorCode.SUCCESS, createUser);
+            return Ok(res);
+           
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserCommand request)
         {
-            try
+            if (id != request.Id)
             {
-                if (id != request.Id)
-                {
-                    request.Id = id;
-                }
-                var updateUser = await _mediator.Send(request);
-                var res = new ApiResponse<UserDto>(1000, updateUser);
-                return Ok(res);
+                request.Id = id;
             }
-            catch (FluentValidation.ValidationException ex)
-            {
-                var errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
-                return BadRequest(new { code = 400, message = "Validation failed", errors });
-            }
+            var updateUser = await _mediator.Send(request);
+            var res = new ApiResponse<UserDto>((int) ErrorCode.SUCCESS, updateUser);
+            return Ok(res);
         }
 
     }
